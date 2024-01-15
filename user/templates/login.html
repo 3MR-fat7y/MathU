@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add the same head content as index.html -->
+</head>
+<body>
+    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+        <div style="margin-right: 50px;">
+            <h1>Login to your math world</h1>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div>
+            <a href="{% url 'signup' %}">Don't have an account? Create</a>
+        </div>
+    </div>
+</body>
+</html>

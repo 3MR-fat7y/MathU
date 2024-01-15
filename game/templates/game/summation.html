@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summation Game</title>
+</head>
+<body>
+    <h1>Welcome to the Summation Game</h1>
+    <form id="summationForm">
+        {% csrf_token %}
+        <label for="num_input">How many numbers do you want to collect: </label>
+        <input type="text" id="num_input" required>
+        <button type="button" onclick="collectNumbers()">Submit</button>
+    </form>
+    <div id="summationResult"></div>
+
+    <script>
+        function collectNumbers() {
+            var num_input = document.getElementById('num_input').value;
+            var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+            // Make AJAX request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', csrf_token);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('summationResult').innerHTML = xhr.responseText;
+                    // Clear the input field after each submission
+                    document.getElementById('num_input').value = '';
+                }
+            };
+            xhr.send('num_input=' + num_input);
+        }
+    </script>
+</body>
+</html>

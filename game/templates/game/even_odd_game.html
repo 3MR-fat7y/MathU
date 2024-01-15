@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Even Odd Game</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #container {
+            text-align: center;
+        }
+
+        h1 {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Welcome to the Even-Odd game</h1>
+        <form id="evenOddForm">
+            {% csrf_token %}
+            <label for="user_input">Please enter a number: </label>
+            <input type="text" id="user_input" required>
+            <button type="button" onclick="checkEvenOdd()">Submit</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function checkEvenOdd() {
+            var user_input = document.getElementById('user_input').value;
+            var csrf_token = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+            // Make AJAX request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRFToken', csrf_token);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    document.getElementById('result').innerHTML = xhr.responseText;
+                    // Clear the input field after each submission
+                    document.getElementById('user_input').value = '';
+                }
+            };
+            xhr.send('user_input=' + user_input);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Level Measurement Results</title>
+</head>
+<body>
+    <h1>Math Level Measurement Results</h1>
+    <p>Your results:</p>
+    {% for i, (user_answer, result) in enumerate(user_answers, start=1) %}
+    <p>Question {{ i }}: {{ result:.2f }} (Your answer: {{ user_answer:.2f }})</p>
+    {% if user_answer == result %}
+        <p>- Correct</p>
+    {% else %}
+        <p>- Incorrect</p>
+    {% endif %}
+{% endfor %}
+<p>Your score is: {{ score:.2f }} out of 100</p>
+</body>
+</html>
